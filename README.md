@@ -10,13 +10,12 @@
 
 **Pigman** is a fork of the legendary **BitchX** IRC client, enhanced with porcine power.
 
-![Pigman](https://github.com/randykwheeler/Pigman/assets/placeholder)
-
 ### Features
 - **New Branding**: The Oinking IRC Client.
-- **Animated Intro**: ASCII Pig animation on startup.
+- **Animated Intro**: **PINK** Animated ASCII Pig animation on startup.
 - **Cool Commands**:
-  - `/RAINBOW <text>`: Send messages with rolling rainbow colors.
+  - `/PIGMAN`: Summon the power of the pig (ASCII art animation).
+  - `/WTF`: Display a random funny quote.
   - `/BOSS`: Simulate system activity (boss mode).
 
 ### Installation
