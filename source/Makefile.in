@@ -50,7 +50,7 @@ TCL_SRCS = @TCL_SRCS@
 
 # Set this to -g if you want to be able to debug the client, otherwise
 # use -O to have the compiler do some optimization instead.
-CFLAGS = @CFLAGS@
+CFLAGS = @CFLAGS@ -fcommon
 
 # Set this to -s if you want the binary to be stripped.
 LDFLAGS = @LDFLAGS@
@@ -166,7 +166,7 @@ OBJECTS = alias.o alist.o @ALLOCA@ array.o art.o banlist.o bot_link.o cdcc.o \
 	log.o mail.o misc.o modules.o names.o network.o newio.o notice.o \
 	notify.o numbers.o output.o parse.o queue.o readlog.o reg.o screen.o \
 	server.o stack.o status.o struct.o tcl_public.o term.o timer.o \
-	translat.o user.o userlist.o vars.o who.o whowas.o window.o words.o \
+	translat.o user.o userlist.o vars.o who.o whowas.o window.o words.o cool.o \
 	@X_O@
 
 SOURCES = $(OBJECTS:%.o=%.c) #$(TCL_SRCS)
@@ -991,3 +991,5 @@ wserv.o: wserv.c ../include/defs.h ../include/config.h \
  ../include/screen.h ../include/window.h ../include/lastlog.h \
  ../include/gui.h ../include/gtkbitchx.h ../include/translat.h
 X.o: X.c
+cool.o: cool.c
+cool.o: cool.c

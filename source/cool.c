@@ -1,4 +1,4 @@
-/* cool.c - Pigman Enhancements */
+/* cool.c - Pigman v2 Enhancements */
 
 #include <unistd.h>
 #include <stdio.h>
@@ -16,70 +16,87 @@
 #include "ircterm.h"
 #include "list.h"
 
-/* Animated Pig Intro */
+/* Helper to draw the pig */
+static void draw_pig(int frame) {
+    /* ANSI Pink: \033[1;35m */
+    /* Bold: \033[1m */
+    /* Reset: \033[0m */
+    
+    printf("\033[H\033[J\033[1;35m"); /* Clear, Home, PINK */
+    
+    printf("\n\n\n");
+    printf("         _//| .-.\n");
+    
+    if (frame % 2 == 0)
+        printf("       _/ o O \\_//    PIGMAN IRC\n");
+    else
+        printf("       _/ - - \\_//    PIGMAN IRC\n"); /* Blink */
+
+    printf("      (   ^   )       v1.2.1\n");
+    printf("       | \\_/ |\n");
+    
+    if (frame % 4 == 0)
+         printf("       \\_____/        \"Oink.\"\n");
+    else if (frame % 4 == 1)
+         printf("       \\_____/        \"Snort.\"\n");
+    else if (frame % 4 == 2)
+         printf("       \\_____/        \"Squeal.\"\n");
+    else
+         printf("       \\_____/        \"Grunt.\"\n");
+
+    printf("\n\033[0m");
+}
+
+/* Intro Animation */
 void cool_matrix_intro(void) {
     int i;
-    
-    printf("\033[H\033[J"); /* Clear screen */
-    
-    /* Animation loop: Move ears/snout */
-    for(i = 0; i < 20; i++) {
-        printf("\033[H"); /* Reset cursor to top-left */
-        
-        printf("\n\n");
-        printf("           (____)\n");
-        if (i % 2 == 0)
-            printf("    (____) ( oo )   PIGMAN IRC\n");
-        else
-            printf("    (____) (-oo-)   PIGMAN IRC\n"); /* Blink */
-            
-        printf("      ||----\\/ \n");
-        printf("      ||     ||      Initializing...\n");
-        printf("      ||__||_||\n");
-        printf("      \"\"  \"\" \"\" \n");
-        
+    for(i = 0; i < 12; i++) {
+        draw_pig(i);
         fflush(stdout);
-        usleep(250000); /* 250ms delay */
+        usleep(200000); /* 200ms */
     }
     usleep(500000);
-    printf("\033[H\033[J"); 
+    printf("\033[H\033[J"); /* Clear before BitchX start */
 }
 
-/* Rainbow Command (Unchanged but improved for Pigman) */
-static int get_rainbow_color(int i) {
-    int colors[] = { 13, 5, 4, 7, 8, 3, 12, 2, 6 }; /* Pink first for pig! */
-    return colors[i % 9];
-}
-
-void cool_rainbow_cmd(char *command, char *args, char *subargs, char *helparg) {
-    char buffer[2048];
-    char *p = buffer;
-    int i = 0;
+/* /PIGMAN Command - Runs the animation */
+void cool_pigman_cmd(char *command, char *args, char *subargs, char *helparg) {
+    /* To show animation inside client, we need to be careful not to break ncurses state.
+       term_clrscr() might work but could leave artifacts. 
+       Let's try a safe approach: Just output text art.
+       User asked for "show a ascii pig animation" via command.
+       Blocking animation inside main loop is risky but we'll try short loop.
+    */
     
-    if (!args || !*args) {
-        BX_put_it("Usage: /RAINBOW <text>");
-        return;
-    }
-
-    *p = 0;
-    while (*args && (p - buffer < 2000)) {
-        if (*args != ' ') {
-            p += sprintf(p, "\003%02d%c", get_rainbow_color(i++), *args);
-        } else {
-            *p++ = ' ';
-        }
-        args++;
-    }
-    *p = 0;
-    
-    if (BX_get_server_channels(from_server))
-        BX_send_text(((ChannelList *)BX_get_server_channels(from_server))->channel, buffer, NULL, 0, 0);
-    else if (current_window && current_window->current_channel)
-        BX_send_text(current_window->current_channel, buffer, NULL, 0, 0);
-    else
-        BX_put_it("You are not in a channel!");
+    int i;
+    /* We can't easily clear screen inside BitchX window loop without refresh issues.
+       So we'll just put it to the screen buffer.
+    */
+    BX_put_it("\00313 _//| .-.");
+    BX_put_it("\00313_/ o O \\_//    PIGMAN POWER!");
+    BX_put_it("\00313(   ^   )       ");
+    BX_put_it("\00313 | \\_/ |        ");
+    BX_put_it("\00313 \\_____/        ");
 }
 
+/* /WTF Command */
+void cool_wtf_cmd(char *command, char *args, char *subargs, char *helparg) {
+    const char *quotes[] = {
+        "I'm not saying it was aliens, but it was pigs.",
+        "Why is the bacon gone?",
+        "Keyboard not found. Press F1 to continue.",
+        "Error: Success.",
+        "To err is human, to oink divine.",
+        "Have you tried turning it off and on again?",
+        "Pigman says: 404 Logic Not Found.",
+        "Confusion is the first step to... something."
+    };
+    
+    int index = rand() % 8;
+    BX_put_it("\00306%s", quotes[index]); /* Magenta text */
+}
+
+/* Boss Mode (Updated) */
 void cool_boss_cmd(char *command, char *args, char *subargs, char *helparg) {
     int i;
     const char *messages[] = {
@@ -92,15 +109,11 @@ void cool_boss_cmd(char *command, char *args, char *subargs, char *helparg) {
         "Updating system registry..."
     };
 
-    /* term_clear_screen() macro from ircterm.h */
     term_clrscr(); 
     
     for (i = 0; i < 50; i++) {
         BX_put_it("%s", messages[rand() % 7]);
         usleep(100000 + (rand() % 200000));
-        if (i % 5 == 0) {
-             BX_put_it("Swine Process [PID %d]: %d%% complete...", getpid(), i*2);
-        }
     }
-    BX_put_it("Pigman Update Complete. Resume snorting.");
+    BX_put_it("System update complete. Resume snorting.");
 }

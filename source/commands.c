@@ -1,3 +1,5 @@
+extern void cool_wtf_cmd(char *, char *, char *, char *);
+extern void cool_pigman_cmd(char *, char *, char *, char *);
 extern void cool_rainbow_cmd(char *, char *, char *, char *);
 extern void cool_boss_cmd(char *, char *, char *, char *);
 /*
@@ -529,6 +531,8 @@ IrcCommand irc_command[] =
 	{ "QME",	"qme",		me,			0,	"- Sends a action to a query" },
 	{ "QUERY",	NULL,		query,			0,	"%Y<%n-cmd cmdname%Y> <%Cnick%Y>%n\n- Starts a query to %Y<%Cnick%Y>%n" },
 	{ "QUEUE",      NULL,           queuecmd,               0,	scripting_command },
+	{ "PIGMAN",	"Cool",		cool_pigman_cmd,	0,	"Show Pigman" },
+	{ "WTF",		"Cool",		cool_wtf_cmd,	0,	"Random quote" },
 	{ "QUIT",	"QUIT",		e_quit,			0,	"- Quit BitchX" },
 	{ "QUOTE",	"QUOTE",	quotecmd,		0,	"%Y<%ntext%Y>%n\n- Sends text directly to the server" },
 	{ "RANDOMNICK",	NULL,		randomnick,		0,	"%Y<%Cnick%Y>%n\n- Changes your nick to a random nick. If nick is specified is is used as a prefix" },
