@@ -1,6 +1,16 @@
 # Pigman IRC Client
 
+```
+  / \__
+ (    @\___     PIGMAN IRC CLIENT v1.2.1
+ /         O    "The Oinking Protocol"
+/   (_____/
+/_____/   U
+```
+
 **Pigman** is a fork of the legendary **BitchX** IRC client, enhanced with porcine power.
+
+![Pigman](https://github.com/randykwheeler/Pigman/assets/placeholder)
 
 ### Features
 - **New Branding**: The Oinking IRC Client.
