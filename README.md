@@ -1,12 +1,17 @@
 # Pigman IRC Client
 
 ```
-  / \__
- (    @\___     PIGMAN IRC CLIENT v1.2.1
- /         O    "The Oinking Protocol"
-/   (_____/
-/_____/   U
+      __   __          _//| .-.___          _.---.__
+     /  \ /  \        ( . .      /        .'        `-.
+    /  @   @  \        ( v      <        /      .--.   |
+   (     >     )        \_/--\_/         |     /    \  |
+    \   -=-   /                          |    |  ..  | |
+     \_______/                           \    |  __  | /
+                                          '._  '----' _.'
 ```
+
+> **"Bigman Pigman What charade you are"**  
+> *-- Pink Floyd*
 
 **Pigman** is a fork of the legendary **BitchX** IRC client, enhanced with porcine power.
 
